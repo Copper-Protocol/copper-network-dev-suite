@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  frontend-prod:
+    extends:
+      file: ./docker-compose.base.yml
+      service: frontend
+    command: node ./www/src/index.js
+    environment:
+      - PORT=80
+      - HOST=0.0.0.0
+    ports:
+      - "80:80"
+    expose:
+      - 80
