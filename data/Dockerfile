@@ -9,7 +9,7 @@ RUN echo "USER: ${_USER}"
 RUN apt update && apt upgrade -y
 
 RUN apt install python3 sudo build-essential -y
-RUN usermod -a -G wheel ${_USER}
+RUN groupadd wheel && usermod -a -G wheel ${_USER}
 RUN npm install -g npm
 RUN echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
