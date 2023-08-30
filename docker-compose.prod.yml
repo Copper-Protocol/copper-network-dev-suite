@@ -17,5 +17,5 @@ networks:
     external: true
     name: coppernetwork_hosting
   datanet:
-    external: true
+    # external: true
     name: coppernetwork_datanet
