@@ -1,0 +1,6 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Copper-Protocol/copper-network-interface
+[submodule "smart-contracts"]
+	path = smart-contracts
+	url = https://github.com/Copper-Protocol/smart-contracts
