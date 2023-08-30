@@ -12,3 +12,10 @@ services:
       - "80:80"
     expose:
       - 80
+networks:
+  webserver_backend:
+    external: true
+    name: coppernetwork_hosting
+  datanet:
+    external: true
+    name: coppernetwork_datanet
