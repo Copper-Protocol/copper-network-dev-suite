@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   frontend-prod:
+    restart: always
     extends:
       file: ./docker-compose.base.yml
       service: frontend
