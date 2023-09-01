@@ -1,0 +1,16 @@
+version: "3.9"
+services: 
+  docker-out:
+    image: copper/docker
+    build:
+      context: ./data
+      target: docker-out
+    environment:
+      - USER=${USER}
+    volumes:
+      - ./:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/passwd:/etc/passwd
+      - /etc/group:/etc/group
+
+    working_dir: /workspace

@@ -1,0 +1,64 @@
+version: '3.9'
+services:
+  api-dev:
+    extends:
+      file: ./docker-compose.base.yml
+      service: api
+    command: npx nodemon --watch src --exec node src
+    volumes:
+      - /media/ipfs/staging:/ipfs/staging
+  frontend-dev:
+    container_name: copper-protocol-frontend-dev
+    extends:
+      file: ./docker-compose.base.yml
+      service: frontend
+    volumes:
+      - ./smart-contracts/evm/artifacts:/home/${USER}/app/src/ethers-artifacts
+      - ./smart-contracts/evm/cache:/home/${USER}/app/src/ethers-cache
+      - ./smart-contracts/evm/config:/home/${USER}/app/src/ethers-config
+    ports:
+      - 3000:3000
+      - 5173:5173
+    expose:
+     - 3000
+     - 5173
+    command: yarn dev --host
+  frontend-test-dev:
+    container_name: copper-protocol-frontend-test-dev
+    extends:
+      file: ./docker-compose.base.yml
+      service: frontend
+    volumes:
+      - ./website:/home/node/app2
+    working_dir: /home/node/app2
+    ports:
+      - 3000:3000
+      - 5173:5173
+    expose:
+     - 3000
+     - 5173
+    command: yarn dev --host
+
+  copper-protocol-smart-contracts-evm:
+    extends:
+      file: ./docker-compose.base.yml
+      service: copper-protocol-smart-contracts-evm
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 5880:80
+      - 5443:443
+    volumes:
+      - ./letsencrypt/data/certbot/conf:/etc/letsencrypt
+    
+    networks:
+      - webserver_backend
+      - datanet
+networks:
+  webserver_backend:
+    external: true
+    name: coppernetwork_hosting
+  datanet:
+    external: true
+    name: coppernetwork_datanet

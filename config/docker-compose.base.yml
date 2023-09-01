@@ -1,0 +1,89 @@
+version: '3.9'
+services:
+  api:
+    image: copper-protocol/smart-contracts
+    build:
+      context: ../data
+      args:
+        - _USER=${USER}
+      target: node-smart-contracts
+    environment:
+      - PORT
+    env_file:
+      - ../.env
+    volumes:
+      - ./api:/home/${USER}/app
+      - ${HOME}/.ssh:/home/${USER}/.ssh
+    working_dir: /home/${USER}/app
+  frontend:
+    container_name: dopper-protocol-frontend
+    image: copper-protocol/smart-contracts
+    build:
+      context: ../data
+      args:
+        - _USER=${USER}
+      target: copper-protocol-frontend
+    environment:
+      - PORT
+    env_file:
+      - ../.env
+    volumes:
+      - ${HOME}/.ssh:/home/${USER}/.ssh
+      - ./.git:/home/${USER}/.git
+      - ./frontend:/home/${USER}/app
+    working_dir: /home/${USER}/app
+  dapp_starter:
+    container_name: dopper-protocol-dapp_starter
+    image: copper-protocol/smart-contracts
+    build:
+      context: ../data
+      args:
+        - _USER=${USER}
+      target: node-mev-frontend
+    environment:
+      - PORT
+    env_file:
+      - ../.env
+    volumes:
+      - ./dapp_starter:/home/${USER}/app
+    working_dir: /home/${USER}/app
+  copper-protocol-smart-contracts-evm:
+    image: copper-protocol/smart-contracts
+    build:
+      context: ../data
+      args:
+        - _USER=${USER}
+      target: node-smart-contracts
+    environment:
+      - PORT
+    env_file:
+      - ../.env
+    volumes:
+      - ./smart-contracts/evm:/home/${USER}/app
+    working_dir: /home/${USER}/app
+  ipfs:
+    image: ipfs/kubo
+    restart: unless-stopped
+    volumes:
+      - /docker/storage/ipfsth:/data/ipfs
+      - /docker/storage/ipfs_fuse:/ipfs
+      - /docker/storage/ipns_fuse:/ipns
+    environment:
+      - IPFS_PATH=/data/ipfs
+    ports:
+      # Swarm listens on all interfaces, so is remotely reachable.
+      - 14001:4001/tcp
+      - 14001:4001/udp
+      
+      # The following ports only listen on the loopback interface, so are not remotely reachable by default.
+      # If you want to override these or add more ports, see https://docs.docker.com/compose/extends/ .
+      
+      # API port, which includes admin operations, so you probably don't want this remotely accessible.
+      - 127.0.0.1:15001:5001
+      
+      # HTTP Gateway
+      - 127.0.0.1:18080:8080
+volumes:
+  ipfs_path:
+  ipfs_fuse:
+  ipns_fuse:
