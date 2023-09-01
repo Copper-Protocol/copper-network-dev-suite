@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  frontend-prod:
+    image: copper-network/interface-01
+    restart: always
+    build: 
+      context: ../frontend
+      target: copper-protocol-frontend-prod
+
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+    volumes:
+      - ./smart-contracts/evm/artifacts:/home/${USER}/app/src/ethers-artifacts
+      - ./smart-contracts/evm/cache:/home/${USER}/app/src/ethers-cache
+      - ./smart-contracts/evm/config:/home/${USER}/app/src/ethers-config
+    ports:
+      - "127.0.0.1:8000:8000"
+    expose:
+      - 8000
+networks:
+  webserver_backend:
+    external: true
+    name: coppernetwork_hosting
+  datanet:
+    # external: true
+    name: coppernetwork_datanet

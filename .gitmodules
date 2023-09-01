@@ -4,3 +4,6 @@
 [submodule "smart-contracts"]
 	path = smart-contracts
 	url = https://github.com/Copper-Protocol/smart-contracts
+[submodule "api"]
+	path = api
+	url = https://github.com/Copper-Protocol/api

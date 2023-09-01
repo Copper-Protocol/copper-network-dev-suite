@@ -22,8 +22,8 @@ USER ${_USER}
 
 FROM golang:1.19-alpine as go-base
 
-FROM node-base as node-mev-bot
-FROM node-base as node-mev-frontend
+FROM node-base as copper-protocol-bot
+FROM node-base as copper-protocol-frontend
 USER root
 RUN apt update && apt upgrade -y
 RUN apt install -y git

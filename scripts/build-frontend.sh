@@ -32,7 +32,7 @@ function gitFrontendPull () {
 
 function frontendYarn () {
     echo "Running yarn"
-    docker compose -f "${BASE_DIR}/docker-compose.dev.yml" yarn $@
+    docker compose -f "${CONFIG_DIR}/docker-compose.dev.yml" yarn $@
 }
 # restart servers
 
@@ -40,7 +40,7 @@ function frontendRestart () {
     MODE=$1
 
     echo "Restarting Frontend"
-    _dc=docker compose -f "${BASE_DIR}/docker-compose.${MODE}.yml"
+    _dc=docker compose -f "${CONFIG_DIR}/docker-compose.${MODE}.yml"
 
     _dc down && _dc up -d frontend-${MODE}
     

@@ -1,0 +1,20 @@
+version: "3.6"
+services:
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 5880:80
+      - 5443:443
+    volumes:
+      - ../data/etc/letsencrypt:/etc/letsencrypt
+    networks:
+      - webserver_backend
+      - datanet
+networks:
+  webserver_backend:
+    external: true
+    name: coppernetwork_hosting
+  datanet:
+    # external: true
+    name: coppernetwork_datanet

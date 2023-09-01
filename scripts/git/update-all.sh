@@ -9,8 +9,16 @@ done
 SCRIPT_PATH="$(readlink -f "${SCRIPT_PATH}")"
 SCRIPT_DIR="$(cd -P "$(dirname -- "${SCRIPT_PATH}")" >/dev/null 2>&1 && pwd)"
 
-BASE_DIR="${PWD}"
-SCRIPTS_DIR="${BASE_DIR}/scripts"
-FRONTEND_DIR="${BASE_DIR}/frontend"
-DATA_DIR="${BASE_DIR}/data"
-CONFIG_DIR="${BASE_DIR}/config"
+cd "${SCRIPT_DIR}/../.."
+
+source .vars
+
+echo "Updating all git repositories"
+
+GIT_REPOS=("frontend" "api" "smart-comtracts")
+
+
+
+for repo in "${GIT_REPOS[@]}"; do
+    echo "REPO: ${repo}"
+done
