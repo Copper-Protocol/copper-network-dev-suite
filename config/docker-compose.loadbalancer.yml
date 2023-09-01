@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   nginx:
-    build: ./nginx
+    build: ../nginx
     restart: always
     ports:
       - 5880:80
