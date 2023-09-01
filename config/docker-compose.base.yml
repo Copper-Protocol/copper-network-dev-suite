@@ -29,23 +29,8 @@ services:
       - ../.env
     volumes:
       - ${HOME}/.ssh:/home/${USER}/.ssh
-      - ./.git:/home/${USER}/.git
-      - ./frontend:/home/${USER}/app
-    working_dir: /home/${USER}/app
-  dapp_starter:
-    container_name: dopper-protocol-dapp_starter
-    image: copper-protocol/smart-contracts
-    build:
-      context: ../data
-      args:
-        - _USER=${USER}
-      target: node-mev-frontend
-    environment:
-      - PORT
-    env_file:
-      - ../.env
-    volumes:
-      - ./dapp_starter:/home/${USER}/app
+      - ../.git:/home/${USER}/.git
+      - ../frontend:/home/${USER}/app
     working_dir: /home/${USER}/app
   copper-protocol-smart-contracts-evm:
     image: copper-protocol/smart-contracts
@@ -59,7 +44,7 @@ services:
     env_file:
       - ../.env
     volumes:
-      - ./smart-contracts/evm:/home/${USER}/app
+      - ../smart-contracts/evm:/home/${USER}/app
     working_dir: /home/${USER}/app
   ipfs:
     image: ipfs/kubo
