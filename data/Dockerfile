@@ -10,7 +10,7 @@ RUN apt update && apt upgrade -y
 
 RUN apt install python3 sudo build-essential -y
 
-RUN usermod -a -G wheel ${_USER}
+RUN [ -z "$(cat /etc/group | grep ^wheel)" ] && groupadd wheel; usermod -a -G wheel ${_USER}
 RUN npm install -g npm
 # RUN [ -z "$(getent group admin)" ] && addgroup wheel
 RUN echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
