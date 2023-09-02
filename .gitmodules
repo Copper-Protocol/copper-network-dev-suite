@@ -7,3 +7,6 @@
 [submodule "api"]
 	path = api
 	url = https://github.com/Copper-Protocol/api
+[submodule "loadbalancer"]
+	path = nginx
+	url = https://github.com/Copper-Protocol/copper-webserver
