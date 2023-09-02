@@ -25,6 +25,9 @@ services:
     extends:
       service: nginx
       file: ./docker-compose.loadbalancer.yml
+    volumes:
+      - ../data/etc/letsencrypt:/etc/letsencrypt
+      - ../data/etc/certbot:/etc/certbot
     ports:
       - 80:80
       - 443:443
