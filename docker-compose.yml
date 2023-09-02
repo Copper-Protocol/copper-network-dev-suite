@@ -1,7 +1,51 @@
 version: "3.9"
 services:
-  frontend-webserver:
-    container_name: copper-frontend-webserver
+  frontend-webserver-01:
+    container_name: copper-frontend-webserver-01
     extends:
       file: ./config/docker-compose.prod.yml
       service: frontend-prod
+    ports:
+      - "127.0.0.1:8001:8000"
+    networks:
+      - webserver_backend
+      - datanet
+     
+  frontend-webserver-02:
+    container_name: copper-frontend-webserver-02
+    extends:
+      file: ./config/docker-compose.prod.yml
+      service: frontend-prod
+    ports:
+      - "127.0.0.1:8002:8000"
+    networks:
+      - webserver_backend
+      - datanet
+
+  frontend-webserver-03:
+    container_name: copper-frontend-webserver-03
+    extends:
+      file: ./config/docker-compose.prod.yml
+      service: frontend-prod
+    networks:
+      - webserver_backend
+      - datanet
+
+  loadbalancer:
+    container_name: copper-protocol-loadbalancer
+    extends:
+      service: loadbalancer
+      file: ./config/docker-compose.prod.yml
+    ports:
+      - "80:80"
+
+    networks:
+      - webserver_backend
+      - datanet
+networks:
+  webserver_backend:
+    external: true
+    name: coppernetwork_hosting
+  datanet:
+    external: true
+    name: coppernetwork_datanet

@@ -16,9 +16,23 @@ source .vars
 echo "Updating all git repositories"
 
 GIT_REPOS=("frontend" "api" "smart-comtracts")
+cd "${BASE_DIR}"
 
+BRANCH="${1}"
+COMMENT="${1}"
 
+[[ -z "${BRANCH}" ]] && {
+    echo "BRANCH NOT SELECTED"
+    exit 1
+}
+[[ -z "${COMMENT}" ]] && {
+    echo "WARNING: COMMENT NOT ADDED"
+    read 
+}
 
 for repo in "${GIT_REPOS[@]}"; do
     echo "REPO: ${repo}"
+    pushd "${BASE_DIR}/${repo}"
+    git add .
+    git commit -m "Updating: ${COMMENT}"
 done

@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   api:
-    image: copper-protocol/smart-contracts
+    image: copper-protocol/api
     build:
       context: ../data
       args:
@@ -16,8 +16,8 @@ services:
       - ${HOME}/.ssh:/home/${USER}/.ssh
     working_dir: /home/${USER}/app
   frontend:
-    container_name: dopper-protocol-frontend
-    image: copper-protocol/smart-contracts
+    container_name: copper-protocol-frontend
+    image: copper-protocol/frontend
     build:
       context: ../data
       args:
@@ -68,6 +68,21 @@ services:
       
       # HTTP Gateway
       - 127.0.0.1:18080:8080
+  copper-controls:
+    image: docker
+    env_file:
+      - ../env.controls
+    environment:
+      - USER=${USER}
+    volumes:
+      - /etc/passwd:/etc/passwd:cached
+      - /etc/group:/etc/group:cached
+      - ../:/home/${USER}/workspace:cached
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: /bin/sh
+    user: ${USER}
+    working_dir: /home/${USER}/workspace
+
 volumes:
   ipfs_path:
   ipfs_fuse:

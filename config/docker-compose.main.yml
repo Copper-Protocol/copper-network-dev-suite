@@ -14,3 +14,10 @@ services:
       - /etc/group:/etc/group
 
     working_dir: /workspace
+networks:
+  webserver_backend:
+    external: true
+    name: coppernetwork_hosting
+  datanet:
+    external: true
+    name: coppernetwork_datanet

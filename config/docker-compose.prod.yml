@@ -14,14 +14,43 @@ services:
       - ./smart-contracts/evm/artifacts:/home/${USER}/app/src/ethers-artifacts
       - ./smart-contracts/evm/cache:/home/${USER}/app/src/ethers-cache
       - ./smart-contracts/evm/config:/home/${USER}/app/src/ethers-config
-    ports:
-      - "127.0.0.1:8000:8000"
     expose:
       - 8000
+    networks:
+      - webserver_backend
+      - datanet
+
+  loadbalancer:
+    image: copper-protocol/loadbalancer
+    extends:
+      service: nginx
+      file: ./docker-compose.loadbalancer.yml
+    ports:
+      - 80:80
+      - 443:443
+    expose:
+     - 80
+     - 443
+    networks:
+      - webserver_backend
+      - datanet
+
+  certbot:
+    image: certbot/dns-linode
+    volumes:
+      - ../data/etc/letsencrypt:/etc/letsencrypt
+    command: "      certonly
+      --manual
+      --preferred-challenges=dns
+      --email bayouasset@proton.me
+      --server https://acme-v02.api.letsencrypt.org/directory
+      --agree-tos
+      -d coppernetwork.io
+      -d *.coppernetwork.io"
 networks:
   webserver_backend:
     external: true
     name: coppernetwork_hosting
   datanet:
-    # external: true
+    external: true
     name: coppernetwork_datanet
