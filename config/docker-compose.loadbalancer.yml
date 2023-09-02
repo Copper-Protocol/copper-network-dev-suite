@@ -11,6 +11,15 @@ services:
     networks:
       - webserver_backend
       - datanet
+  certbot:
+    image: copper-protocol/certbot
+    extends:
+      service: certbot
+      file: ./config/docker-compsoe.prod.yml
+    volumes:
+      - ../data/etc/letsencrypt:/etc/letsencrypt
+      - ../data/etc/certbot:/etc/certbot
+   
 networks:
   webserver_backend:
     external: true
