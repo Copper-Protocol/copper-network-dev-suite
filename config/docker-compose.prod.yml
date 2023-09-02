@@ -39,7 +39,7 @@ services:
     image: certbot/dns-linode
     volumes:
       - ../data/etc/letsencrypt:/etc/letsencrypt
-
+      - ../data/etc/certbot:/etc/certbot
     command: "      certonly
       --manual
       --preferred-challenges=dns
