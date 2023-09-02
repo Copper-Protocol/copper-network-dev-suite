@@ -13,9 +13,9 @@ services:
       file: ./docker-compose.base.yml
       service: frontend
     volumes:
-      - ./smart-contracts/evm/artifacts:/home/${USER}/app/src/ethers-artifacts
-      - ./smart-contracts/evm/cache:/home/${USER}/app/src/ethers-cache
-      - ./smart-contracts/evm/config:/home/${USER}/app/src/ethers-config
+      - ../smart-contracts/evm/artifacts:/home/${USER}/app/src/ethers-artifacts
+      - ../smart-contracts/evm/cache:/home/${USER}/app/src/ethers-cache
+      - ../smart-contracts/evm/config:/home/${USER}/app/src/ethers-config
     ports:
       - 3000:3000
       - 5173:5173
@@ -34,7 +34,7 @@ services:
       - 5880:80
       - 5443:443
     volumes:
-      - ./letsencrypt/data/certbot/conf:/etc/letsencrypt
+      - ../data/certbot/conf:/etc/letsencrypt
     
     networks:
       - webserver_backend

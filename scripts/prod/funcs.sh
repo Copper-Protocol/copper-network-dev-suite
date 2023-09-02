@@ -8,5 +8,8 @@ function git_add_commit () {
 function git_push () {
     BRANCH="${1}"
 
+    echo "BRANCH '${BRANCH}'"
+
+    [ -z "${BRANCH}" ] && BRANCH="$(git branch | grep '*' | awk '{print $2}')"
     git push origin $BRANCH
 }
