@@ -12,7 +12,11 @@ RUN apt install python3 sudo build-essential -y
 
 RUN [ -z "$(cat /etc/group | grep ^wheel)" ] && groupadd wheel; usermod -a -G wheel ${_USER}
 RUN npm install -g npm
+<<<<<<< HEAD
 # RUN [ -z "$(getent group admin)" ] && addgroup wheel
+=======
+RUN [[ -z "$(getent group admin)" ]] && groupadd
+>>>>>>> bb5df22 (fixed Dockerfile: group wheel doesn't exit)
 RUN echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
 RUN echo "SWITCHED USER: ${_USER}"
