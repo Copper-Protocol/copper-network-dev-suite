@@ -10,13 +10,9 @@ RUN apt update && apt upgrade -y
 
 RUN apt install python3 sudo build-essential -y
 
-RUN [ -z "$(cat /etc/group | grep ^wheel)" ] && groupadd wheel; usermod -a -G wheel ${_USER}
 RUN npm install -g npm
-<<<<<<< HEAD
-# RUN [ -z "$(getent group admin)" ] && addgroup wheel
-=======
-RUN [[ -z "$(getent group admin)" ]] && groupadd
->>>>>>> bb5df22 (fixed Dockerfile: group wheel doesn't exit)
+
+RUN [ -z "$(cat /etc/group | grep ^wheel)" ] && groupadd wheel; usermod -a -G wheel ${_USER}
 RUN echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
 RUN echo "SWITCHED USER: ${_USER}"
@@ -36,8 +32,9 @@ RUN apt update && apt upgrade -y
 RUN apt install -y git
 USER ${_USER}
 
-FROM node-base as node-smart-contracts
-FROM node-base as node-venom
+FROM node-base as copper-protocol-smart-contracts
+FROM node-base as copper-protocol-venom
+FROM node-base as copper-protocol-api
 
 FROM go-base as mev-go-bot
 RUN go clean -modcache

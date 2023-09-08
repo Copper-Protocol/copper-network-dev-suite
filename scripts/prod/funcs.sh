@@ -13,3 +13,16 @@ function git_push () {
     [ -z "${BRANCH}" ] && BRANCH="$(git branch | grep '*' | awk '{print $2}')"
     git push origin $BRANCH
 }
+
+function dc_base () {
+    docker compose -f config/docker-compose.base.yml $@
+}
+function dc_dev () {
+    docker compose -f config/docker-compose.dev.yml $@
+}
+function dc_main () {
+    docker compose -f config/docker-compose.main.yml $@
+}
+function dc_prod () {
+    docker compose -f config/docker-compose.prod.yml $@
+}
